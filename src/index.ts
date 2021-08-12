@@ -1,5 +1,12 @@
 import Express from "express";
 
+// Use global variables
+
+global.Config = { Foo: "Bar" };
+global.Foo = "Bar";
+
+// Setup express
+
 const app = Express();
 
 app.get('/ping', function (req: Express.Request, res: Express.Response) {
