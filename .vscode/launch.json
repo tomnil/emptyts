@@ -4,7 +4,7 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Debug typescript",
+			"name": "Debug typescript directly using ts-node",
 			"type": "node",
 			"request": "launch",
 			"smartStep": false,
@@ -14,11 +14,10 @@
 			],
 			"runtimeArgs": [
 				// "--files"		-- Don't use => Use environment variable TS_NODE_FILES instead 
-				"-r",
-				"ts-node/register/transpile-only"
+				"--loader",
+				"ts-node/esm"
 			],
 			"cwd": "${workspaceRoot}",
-			"protocol": "inspector",
 			"internalConsoleOptions": "openOnSessionStart",
 			"env": {
 				"TS_NODE_FILES": "true" // Respect include/exclude in tsconfig.json => will read declaration files  (ts-node --files src\index.ts)
@@ -32,6 +31,26 @@
 			],
 			"outputCapture": "std",
 			"stopOnEntry": false
-		}
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"runtimeArgs": [
+				"--es-module-specifier-resolution=node"
+			],
+			"name": "Debug - using build output in bin folder",
+			"program": "${workspaceFolder}/bin/index.js",
+			"cwd": "${workspaceFolder}/bin",
+			"console": "internalConsole",
+			"outputCapture": "std",
+			"smartStep": true,
+			"skipFiles": [
+				"<node_internals>/**",
+				"<node_internals>/**/*.js",
+				"${workspaceRoot}/node_modules/**/*.js",
+				"${workspaceFolder}/node_modules/**/*.js",
+				"async_hooks"
+			],
+		},
 	]
 }
