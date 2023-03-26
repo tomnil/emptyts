@@ -1,14 +1,15 @@
 {
-    "globals": {
-        "XYZ": true /** Add globals from a potential global.d.ts here **/
-    },
     "env": {
         "browser": true,
         "commonjs": true,
         "es2020": true
     },
+    "ignorePatterns": [
+        "bin" // Don't parse the output found in any bin folder
+    ],
     "extends": [
         "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
@@ -16,24 +17,17 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "indent": "off",
-        "quotes": "off",
+        // ***************************************************
+        // * General formatting
+        // ***************************************************
+        "semi-style": [
+            "error",
+            "last"
+        ],
         "no-tabs": "off",
-        "semi": "error",
-        "padded-blocks": "off",
-        "no-multi-spaces": "off",
-        "no-multiple-empty-lines": "off",
-        "spaced-comment": "off",
-        "operator-linebreak": "off",
-        "comma-dangle": "off",
-        "eol-last": "off",
-        "no-undef-init": "off",
-        "brace-style": "off",
-        "no-unneeded-ternary": "off",
-        "no-return-await": "off",
         "max-len": [
             2,
-            340,
+            180,
             {
                 "ignoreComments": true,
                 "ignoreTrailingComments": true,
@@ -43,6 +37,32 @@
             }
         ],
         "no-trailing-spaces": "warn", // disallow trailing whitespace at the end of lines
+        // ***************************************************
+        // * Formatting - General
+        // ***************************************************
+        "@typescript-eslint/semi": "off",
+        "@typescript-eslint/quotes": "off",
+        "@typescript-eslint/indent": "off",
+        // ***************************************************
+        // * Formatting { }
+        // ***************************************************
+        "curly": "off", // Use "brace-style" instead
+        "brace-style": [
+            "error",
+            "stroustrup",
+            {
+                "allowSingleLine": true
+            }
+        ],
+        "object-curly-spacing": "off", // Use @typescript-eslint instead
+        "@typescript-eslint/object-curly-spacing": [
+            "warn",
+            "always"
+        ],
+        // ***************************************************
+        // * Formatting - Linefeeds and spaces
+        // ***************************************************
+        "padded-blocks": "off",
         "space-before-function-paren": [
             "warn",
             {
@@ -51,44 +71,76 @@
                 "asyncArrow": "always"
             }
         ],
-        "eqeqeq": "error",
+        // ***************************************************
+        // * Qoutes / Strings / Concaternations
+        // ***************************************************
+        "prefer-template": "warn", // makes string use backticks eg `xx`;
+        "quote-props": [ // Will change let a= { "foo": bar } into { foo: bar }
+            "error",
+            "as-needed"
+        ],
+        "no-useless-escape": "warn", // Will warn of for example this "\'"
+        "no-useless-concat": "warn", // Will warn for example for var a = '1' + '0';
+        "no-param-reassign": "error", // Disallow function input parameters to be modified
+        "no-mixed-operators": "error", // Disallow var foo = a && b < 0 || c > 0 || d + 1 === 0;
+        // ***************************************************
+        // * Variables
+        // ***************************************************
+        "camelcase": "off",
+        "new-cap": "off",
+        // -------------------------------
+        "prefer-const": "error",
+        "@typescript-eslint/no-unused-vars": "warn",
+        "no-shadow": "off", // Note: you must disable the base rule as it can report incorrect errors
+        "@typescript-eslint/no-shadow": [
+            "error",
+            {
+                "hoist": "functions"
+            }
+        ],
+        "one-var": "off",
+        "no-use-before-define": "off",
+        "@typescript-eslint/no-use-before-define": [
+            "error",
+            {
+                "functions": false,
+                "classes": false,
+                "variables": true,
+                "allowNamedExports": false
+            }
+        ],
+        // ***************************************************
+        // * This... and this...
+        // ***************************************************
+        "@typescript-eslint/no-this-alias": "warn",
+        // ***************************************************
+        // * Debugging
+        // ***************************************************
+        "no-console": "off",
+        "no-debugger": "warn",
+        // ***************************************************
+        // * Async/Await/Promise and callbacks
+        // ***************************************************
         "require-await": "error",
-        "no-unreachable": "warn", // disallow unreachable statements after a return, throw, continue, or break statement
-        "lines-between-class-members": "off",
-        "no-useless-constructor": "warn",
-        "no-useless-escape": "warn",
-        "no-useless-return": "warn",
-        "valid-typeof": "error",
         "prefer-promise-reject-errors": "error",
         "handle-callback-err": "error",
-        "one-var": "off",
-        "no-mixed-requires": "error",
-        "new-cap": "off",
-        "no-empty-function": "warn",
-        "dot-notation": "warn",
-        "no-unused-vars": "off", // Rule "@typescript-eslint/no-unused-vars" is used instead 
-        "no-param-reassign": "warn",
-        "no-useless-concat": "warn",
-        "array-callback-return": "warn",
-        "no-use-before-define": "off",
-        "import/no-useless-path-segments": "off",
-        "no-mixed-operators": "off",
-        "guard-for-in": "off",
-        "curly": [
-            "off",
-            "multi-or-nest",
-            "consistent"
-        ],
-        "prefer-template": "error", // makes string use `xx`;
-        "quote-props": "off", // Will change let a= { "foo": bar } into { foo: bar }
-        "prefer-const": "error",
-        "camelcase": "off",
-        "@typescript-eslint/ban-ts-comment": "off",
+        // ***************************************************
+        // * General development
+        // ***************************************************
+        "eqeqeq": "error",
+        "no-unreachable": "warn", // disallow unreachable statements after a return, throw, continue, or break statement
+        "valid-typeof": "warn", // detects typeof foo === "strnig"
+        // ***************************************************
+        // * Functions
+        // ***************************************************
         "@typescript-eslint/explicit-module-boundary-types": "warn",
-        "@typescript-eslint/no-this-alias": "off",
-        "no-console": "off",
+        "no-useless-return": "warn",
+        "no-empty-function": "error", // Need to write code :)
+        // ***************************************************
+        // * Types
+        // ***************************************************
         "@typescript-eslint/ban-types": [
-            "off",
+            "warn",
             {
                 "types": {
                     "String": {
@@ -105,9 +157,23 @@
         "@typescript-eslint/no-explicit-any": [
             "warn",
             {
-                "fixToUnknown": false,
+                "fixToUnknown": true,
                 "ignoreRestArgs": true
             }
-        ]
+        ],
+        "@typescript-eslint/explicit-function-return-type": [
+            "warn",
+            {
+                "allowExpressions": false,
+                "allowTypedFunctionExpressions": true,
+                "allowHigherOrderFunctions": false,
+                "allowDirectConstAssertionInArrowFunctions": false,
+                "allowConciseArrowFunctionExpressionsStartingWithVoid": false
+            }
+        ],
+        // ***************************************************
+        // * TypeScript general
+        // ***************************************************
+        "@typescript-eslint/ban-ts-comment": "off"
     }
 }
