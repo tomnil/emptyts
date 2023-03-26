@@ -4,14 +4,13 @@
 	"editor.formatOnType": true,
 	"workbench.tree.indent": 25,
 	"workbench.tree.renderIndentGuides": "always",
-	"eslint.alwaysShowStatus": true,
 	"workbench.editor.highlightModifiedTabs": true,
 	"editor.mouseWheelZoom": true,
 	"window.title": "${activeEditorMedium}${separator}${rootName}",
 	"search.exclude": {
 		"*package*.json": true, // Exlude all json files in the root
 		"**/node_modules": true,
-		"bin/**": true // Don't search the TypeScript "bin" folder
+		"bin/**": true // Don't search the TypeScript output folder
 	},
 	"typescript.referencesCodeLens.enabled": true,
 	"workbench.colorCustomizations": {
@@ -20,5 +19,17 @@
 		"activityBar.background": "#440000",
 		"titleBar.activeBackground": "#440000",
 		"titleBar.inactiveBackground": "#220000"
-	}
+	},
+	"editor.codeActionsOnSave": {
+		"source.fixAll": true,
+		"source.fixAll.eslint": true
+	},
+	"typescript.suggest.autoImports": false,
+	"javascript.suggest.autoImports": false,
+	"editor.bracketPairColorization.enabled": true,
+	"editor.insertSpaces": false,
+	"terminal.integrated.autoReplies": {
+		"Terminate batch job (Y/N)?": "Y\r"
+	},
+	"debug.javascript.autoAttachFilter": "smart" // Needed for tsc-watch to automatically attach the debugger; restart *the terminal* (reloading the vscode window isn't enough) if you change this setting.
 }
