@@ -2,7 +2,7 @@
 
 This project is a simple starter for TypeScript with some good start settings.
 
-:!: Note: Settings/this file is configured for use in Windows, you might need to modify slashes in order to make it work.
+:!: Note: Settings/this file is configured for use in Mac, you might need to modify slashes in order to make it work.
 
 ## Beginners tip
 
@@ -18,28 +18,41 @@ There are several ways to run the code.
 
 ### Inside vscode
 
-* Just press F5 in vscode
-* Press ctrl-shift-p and choose "Debug: Select and start debugging"
-* Using the UI
+* Press ctrl-shift-p and choose "Debug: Select and start debugging" (or press F5 in vscode)
 
-
-### Directly running .ts from command line
+### Directly running .ts from the terminal
 
 Use one of the following (depends on what you like)
 
 ```bash
-node.exe -r ts-node/register ./src/index.ts
-node.exe -r ts-node/register/transpile-only ./src/index.ts   # This one is faster!
-npm start
+# Use tsc-wach (automatically attaches debugger)
+# This one is my favourite :)
+npm run tsc-watch
+
+# Use nodemon (automatically attaches debugger)
 npm run nodemon
-nodemon
-.\node_modules\.bin\ts-node src\index.ts
+
+# Or run node without watcher support
+node --loader ts-node/esm ./src/index.ts
+
+# .. or directly call ts-node-esm
+./node_modules/.bin/ts-node-esm src/index.ts
 ```
 
 ### Compile to javascript and then run it
 
 ```bash
-tsc -b -v
+# To clean and rebuild
+npm run rebuild
+
+# To just build
+npm run build
+
+# To just build and watch for changes
+npm run buildw
+
+# To run tsc and launch transpiled result
+tsc -b -v -w -i
 node bin\index.js
 ```
 
@@ -50,3 +63,5 @@ Eslint is configured, run linting by executing:
 ```bash
 npm run eslint
 ```
+
+Enjoy :)
